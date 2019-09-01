@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>tmpsite</title>
+</head>
+<body> 
+tmpsiteです。入力してください<br/>
+送信元アドレス：<input type="text" name="fromAddress" id="fromAddress"><br/>
+送信先アドレス：<input type="text" name="atAddress" id="atAddress"><br/>
+メール件名：<input type="text" name="subject" id="subject"><br/>
+メール本文：<textarea name="message" id="message" rows="10" cols="60"></textarea><br/>
+<input type="submit" name="submit" id="submit" value="送信">
+<script type="text/javascript">
+	var subm = document.getElementById("submit");
+	subm.addEventListener("click", function(){
+		let fromAddress = document.getElementById("fromAddress").value;
+		let atAddress = document.getElementById("atAddress").value;
+		let subject = document.getElementById("subject").value;
+		let message = document.getElementById("message").value;
+		let str = {'fromAddress':fromAddress, 'atAddress':atAddress, 'subject':subject, 'message':message};
+		let json = JSON.stringify(str);
+		let req = new XMLHttpRequest();
+		req.open('POST', './sendMail.php', true);
+		req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		req.send(json);
+
+		req.onload=function(){
+			alert(req.responseText);
+		}
+	})
+</script>
+</body>
+</html>
